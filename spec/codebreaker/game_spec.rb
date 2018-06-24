@@ -38,6 +38,8 @@ module Codebreaker
 
     context '#check_result' do
       before do
+        game = double
+        # allow(game).to receive(:start).and_throw(:@secret_code, [6, 1, 3, 4])
         subject.instance_variable_set :@secret_code, [6, 1, 3, 4]
       end
 
@@ -75,24 +77,30 @@ module Codebreaker
         subject.instance_variable_set :@user_code, [1, 6, 3, 4]
         expect(subject.prepare_result).to eq(["-", "-", "+", "+"])
       end
+
+      it 'when secret code is [1244] and user puts [1242] should return +++' do
+        subject.instance_variable_set :@secret_code, [1, 2, 4, 4]
+        subject.instance_variable_set :@user_code, [1, 2, 4, 2]
+        expect(subject.prepare_result).to eq(["+", "+", "+"])
+      end
     end
 
-    context '#get_hint' do
+    context '#hint' do
       it 'should return one number of secret code' do
         subject.instance_variable_set :@secret_code, [6, 1, 3, 4]
         expected_array = ['***4', '**3*', '*1**', '6***']
-          expect(expected_array).to include(subject.get_hint)
+          expect(expected_array).to include(subject.hint)
       end
 
       it 'hint can be taken once' do
-        subject.get_hint
+        subject.hint
         expect(subject.instance_variable_get(:@hint)).to be_falsey
       end
     end
 
-    context '#won' do
+    context '#won' do # wrong test
       it 'sets game result into win' do
-        expect(@user_code == @secret_code).to be_truthy
+        expect(subject.send(:won)).to be_truthy
       end
     end
 
@@ -101,6 +109,5 @@ module Codebreaker
         expect(subject.send(:lost)).to be_falsey
       end
     end
-
   end
 end
