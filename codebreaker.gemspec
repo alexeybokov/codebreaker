@@ -11,11 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "codebreaker"
   spec.description   = "Hometask game codebreaker"
-<<<<<<< HEAD
   spec.homepage      = "http://localhost:3000"
-=======
-  spec.homepage      = "http://locflhost:3000"
->>>>>>> 5fce63d4ab173db59610d6adab8327f557dd3404
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
